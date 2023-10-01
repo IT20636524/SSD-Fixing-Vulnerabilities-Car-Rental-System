@@ -27,7 +27,9 @@ router.post("/", async (req, res) => {
 //UPDATE STAFF
 router.put("/update/:driver_code", async(req, res) => {
     try {
-      const updatedStaff = await Staff.findOneAndUpdate({'driver_code':req.params.driver_code},
+      //fix Nosql injection
+      let query = { driver_code: req.params.driver_code.toString() };
+      const updatedStaff = await Staff.findOneAndUpdate(query,
         {
           $set: req.body
         },{new:true}
@@ -43,7 +45,9 @@ router.put("/update/:driver_code", async(req, res) => {
 //DELETE STAFF
 router.delete("/delete/:driver_code", async (req, res) => {
   try {
-    const staff = await Staff.findOneAndDelete({'driver_code':req.params.driver_code});
+    //fix Nosql injection
+    let query = { driver_code: req.params.driver_code.toString() };
+    const staff = await Staff.findOneAndDelete(query);
     try {
       await staff.delete();
       res.status(200).json("Driver has been deleted...");
@@ -58,7 +62,8 @@ router.delete("/delete/:driver_code", async (req, res) => {
 //GET DRIVER DETAILS
 router.get("/:driver_code", async (req, res) => {
   try {
-    const staff = await Staff.findOne({ 'driver_code': req.params.driver_code });
+    //fix Nosql injection
+    const staff = await Staff.findOne({ 'driver_code': req.params.driver_code.toString() });
     res.status(200).json(staff);
   } catch (err) {
     res.status(500).json(err);

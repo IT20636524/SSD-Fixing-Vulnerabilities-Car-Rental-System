@@ -52,9 +52,11 @@ router.get("/:name", async(req,res) => {
     try{
         let bookings;
         if(book_id) {
-            bookings = await Booking.find({ booking_id });
+          bookings = await Booking.find({ book_id });
         } else {
-            bookings = await Booking.find({name:req.params.name});
+            //Fix Nosql injection
+            let query = { name: req.params.name.toString() };
+            bookings = await Booking.find(query);
         }
         res.status(200).json(bookings);
     }catch(err){
@@ -75,7 +77,8 @@ router.get("/getone/:booking_id", async(req,res) => {
 //Update booking
 router.put("/update/:id", async(req,res) => {
     try{
-        const updatedBooking = await Booking.findOneAndUpdate({'booking_id':req.params.id},
+        //Fix Nosql injection
+        const updatedBooking = await Booking.findOneAndUpdate({'booking_id':req.params.id.toString()},
             {
                 $set:req.body
             },{new:true}
@@ -89,8 +92,11 @@ router.put("/update/:id", async(req,res) => {
 //Delete booking
 router.delete("/delete/:id", async(req,res) => {
     try{
-        const deletedBooking = await Booking.findOneAndDelete({'booking_id':req.params.id});
-        res.status(200).json("Booking has been deleted");
+      //Fix Nosql injection
+      const deletedBooking = await Booking.findOneAndDelete({
+        booking_id: req.params.id.toString(),
+      });
+      res.status(200).json("Booking has been deleted");
     }catch(err){
         res.status(500).json(err);
     }

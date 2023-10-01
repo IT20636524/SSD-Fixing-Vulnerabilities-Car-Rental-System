@@ -30,7 +30,9 @@ router.post("/", async (req, res) => {
 //GET PAYMENT
 router.get("/:payment_id", async (req, res) => {
   try {
-    const payment = await Payment.findOne({ 'payment_id': req.params.payment_id });
+    //fix Nosql injection
+    let query = { payment_id: req.params.payment_id.toString()};
+    const payment = await Payment.findOne(query);
     res.status(200).json(payment);
   } catch (err) {
     res.status(500).json(err);
