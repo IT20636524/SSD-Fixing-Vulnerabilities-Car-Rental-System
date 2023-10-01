@@ -46,12 +46,26 @@ const storage = multer.diskStorage({
     },
 });
 
-const upload = multer({ storage: storage });
+//Rejecting requests with significant content length- prevents DoS attacks
+// const upload = multer({ storage: storage });
+const upload = multer({
+  storage: storage,
+  limits: {
+    fileSize: 8000000, // Compliant: 8MB
+  },
+});
 app.post("/api/upload", upload.single("file"), (req, res) => {
   res.status(200).json("File has been uploaded");
 });
 
-const update = multer({ storage: storage });
+//Rejecting requests with significant content length- prevents DoS attacks
+// const update = multer({ storage: storage });
+const update = multer({
+  storage: storage,
+  limits: {
+    fileSize: 8000000, // Compliant: 8MB
+  },
+});
 app.put("/api/update", update.single("file"), (req, res) => {
   res.status(200).json("File has been updated");
 });
