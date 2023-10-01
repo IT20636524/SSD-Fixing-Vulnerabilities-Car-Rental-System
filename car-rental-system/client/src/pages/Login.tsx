@@ -2,6 +2,7 @@ import axios from "axios";
 import React, { useContext, useRef, useState } from "react";
 import { Context } from "../context/Context";
 import "../pages/styles.css"
+import { signWithGoogle } from "../utils/loginWithGoogle";
 // import jwt_decode from "jwt-decode";
 
 export default function Login() {
@@ -20,6 +21,31 @@ export default function Login() {
           console.log(err);
         }
       };
+
+      const handleLoginWithGoogle = async () => {
+        try {
+            const user = await signWithGoogle();
+            console.log(user);
+            const res = await axios.post("http://localhost:5000/api/UserAuth/register?provider=google", { 
+                name: user?.displayName,
+                email:user?.email,
+                profile_pic:user?.photoURL,
+                firebase_uid:user?.uid
+
+            });
+            console.log(res);
+
+            // const response = await axios.post("http://localhost:5000/api/UserAuth/login", { 
+            //     email: ,
+            // });
+            // localStorage.setItem('user', JSON.stringify(response.data.data.user))
+            // localStorage.setItem('access_token', response.data.data.access_token)
+            // window.location.href = "/";
+        } catch (error) {
+            console.log(error);
+        }
+        
+      }
 
     const emailRef = useRef<HTMLInputElement>(null);
     const passwordRef = useRef<HTMLInputElement>(null);
@@ -92,6 +118,9 @@ export default function Login() {
                                         <button type="submit" className="btn btn-primary btn-block mb-4">
                                             Sign In
                                         </button>
+                                        <button type="button" className="btn btn-primary btn-block mb-4" onClick={handleLoginWithGoogle}>
+                                            Sign In Google
+                                        </button>
                                         <br/>
                                         <br/>
 
@@ -101,8 +130,9 @@ export default function Login() {
                                             <a className="login-link" href="/sign-up">
                                                 Sign up
                                             </a>
-
                                         </div>
+                                        
+
                                     </form>
                                 </div>
                             </div>

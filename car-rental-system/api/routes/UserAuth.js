@@ -26,29 +26,51 @@ const sendTokenResponse = async (res, user, message) => {
 
 //Register
 router.post("/register", async (req,res) => {
-    
-    const salt = await bcrypt.genSalt(10);
-    const hashedPass = await bcrypt.hash(req.body.password, salt);
-    const newUser = new User({
-        user_id : req.body.user_id,
-        name : req.body.name,
-        email : req.body.email,
-        password : hashedPass,
-        profile_pic : req.body.profile_pic,
-    });
-    try{
-        const usercount = await User.count()
-        newUser.user_id = 'U00' + (parseInt(usercount)+1)
-        try{
+    if(req.query.provider){
+        const newUser = new User({
+          name: req.body.name,
+          email: req.body.email,
+          profile_pic: req.body.profile_pic,
+          firebase_uid: req.body.firebase_uid,
+        });
+        try {
+          const usercount = await User.count();
+          newUser.user_id = "U00" + (parseInt(usercount) + 1);
+          try {
             const user = await newUser.save();
             res.status(200).json(user);
-        } catch (err){
+          } catch (err) {
             res.status(500).json(err);
+          }
+        } catch (err) {
+          console.log(err);//500 server error when user again register with same email
         }
-    }catch(err){
-        console.log(err);
+    } else {
+        const salt = await bcrypt.genSalt(10);
+        const hashedPass = await bcrypt.hash(req.body.password, salt);
+        //vulnerability-if password is empty hash value will generate
+        const newUser = new User({
+          name: req.body.name,
+          email: req.body.email,
+          password: hashedPass,
+          profile_pic: req.body.profile_pic,
+        });
+        try {
+            const usercount = await User.count(); 
+            newUser.user_id = "U00" + (parseInt(usercount) + 1);
+            try {
+                const user = await newUser.save();
+                res.status(200).json(user);
+            } catch (err) {
+                res.status(500).json(err);
+            }
+        } catch (err) {
+            console.log(err);
+        }
     }
+    
 });
+
 
 //Login
 router.post("/login", async(req,res) => {
