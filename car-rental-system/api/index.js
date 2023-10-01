@@ -1,5 +1,6 @@
 const express = require("express");
 const app = express();
+app.disable("x-powered-by");
 const dotenv = require("dotenv");
 const mongoose = require("mongoose");
 const UserAuthRoute = require("./routes/UserAuth");
