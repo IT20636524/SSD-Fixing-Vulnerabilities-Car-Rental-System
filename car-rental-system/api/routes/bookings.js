@@ -48,7 +48,7 @@ router.get("/all", async(req,res) => {
 
 //Get all bookings according to name
 router.get("/:name", async(req,res) => {
-    const book_id = req.query.booking_id;
+    const book_id = req.query.booking_id.toString();
     try{
         let bookings;
         if(book_id) {
@@ -67,7 +67,7 @@ router.get("/:name", async(req,res) => {
 //Get one booking
 router.get("/getone/:booking_id", async(req,res) => {
     try{
-        const booking = await Booking.findOne({ 'booking_id':req.params.booking_id });
+        const booking = await Booking.findOne({ 'booking_id':req.params.booking_id.toString() });
         res.status(200).json(booking);
     }catch(err){
         res.status(500).json(err);
