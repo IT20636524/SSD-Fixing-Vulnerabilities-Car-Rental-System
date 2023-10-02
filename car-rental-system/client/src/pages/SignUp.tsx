@@ -7,7 +7,7 @@ import {
 } from 'formik';
 import { TextField } from '../components/TextField';
 import * as Yup from 'yup';
-import axios from 'axios';
+import axios from '../lib/axios';;
 import swal from 'sweetalert';
 import handleThirdPartyAuthentication from '../utils/handleThirdPartyAuthentication';
 
@@ -46,7 +46,7 @@ export const Signup = () => {
             validationSchema={validate}
             onSubmit={(values: any) => {
                 console.log(values)
-                axios.post('http://localhost:5000/api/UserAuth/register', values).then(function (response) {
+                axios.post('/UserAuth/register', values).then(function (response) {
                     console.log(response);
                     swal({ text: "Successfully Added", icon: "success" })
                 })

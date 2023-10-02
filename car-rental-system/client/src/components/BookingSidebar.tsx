@@ -1,4 +1,4 @@
-import axios from 'axios'
+import axios from '../lib/axios';
 import React, { useState } from 'react'
 import { Col, Row, Form } from "react-bootstrap";
 import { useParams } from 'react-router-dom';
@@ -18,7 +18,7 @@ export default function BookingSidebar() {
     const {id}=useParams();
 
 
-    axios.get("http://localhost:5000/api/cars/"+id).then(function (response) {
+    axios.get("/cars/"+id).then(function (response) {
         console.log(response);
         setPassengers(response.data['passengers']);
         setTransmission(response.data['transmission']);

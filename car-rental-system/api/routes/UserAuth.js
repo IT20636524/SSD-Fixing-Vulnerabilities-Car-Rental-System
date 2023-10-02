@@ -90,10 +90,13 @@ router.post("/validate", async (req, res) => {
 
 
 //Login
-router.post("/login", async (req, res) => {
-  // console.log(req);
-  try {
-    const user = await User.findOne({ email: req.body.email })
+router.post("/login", async(req,res) => {
+    // console.log(req);
+    try{
+        //fixing NoSQL injection
+        // const user = await User.findOne({ email : req.body.email})
+        let query = { email: req.body.email.toString() };
+        const user = await User.findOne(query)
 
     console.log(req.body.password);
     if (!user) {

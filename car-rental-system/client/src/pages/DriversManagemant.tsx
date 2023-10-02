@@ -1,4 +1,4 @@
-import axios from 'axios';
+import axios from '../lib/axios';;
 import React, {  useState,useEffect } from 'react'
 import AddStaff from '../components/StaffModal/AddStaff';
 import DeleteStaff from '../components/StaffModal/DeleteStaff';
@@ -10,7 +10,7 @@ export default function DriversManagemant() {
 
   
   useEffect(() => {
-    axios.get("http://localhost:5000/api/staff/")
+    axios.get("/staff/")
 
     .then(res => {   
       setStaff(res.data);

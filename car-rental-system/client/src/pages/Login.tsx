@@ -9,13 +9,13 @@ export default function Login() {
     const handleSubmit = async (e: any) => {
         e.preventDefault();
         try {
-            const res = await axios.post("http://localhost:5000/api/UserAuth/login", {
-                email: emailRef.current?.value,
-                password: passwordRef.current?.value,
-            });
-            localStorage.setItem('user', JSON.stringify(res.data.data.user))
-            localStorage.setItem('access_token', res.data.data.access_token)
-            window.location.href = "/";
+          const res = await axios.post("/UserAuth/login", { 
+            email: emailRef.current?.value,
+            password: passwordRef.current?.value,
+           });
+          localStorage.setItem('user', JSON.stringify(res.data.data.user))
+          localStorage.setItem('access_token', res.data.data.access_token)
+          window.location.href = "/";
         } catch (err) {
             console.log(err);
         }
@@ -33,7 +33,7 @@ export default function Login() {
     //     // console.log(emailRef);
     //     console.log(passwordRef);
     //     try{
-    //         const res = await axios.post("http://localhost:5000/api/UserAuth/login",{
+    //         const res = await axios.post("/UserAuth/login",{
     //             email: emailRef.current?.value,
     //             password: passwordRef.current?.value,
     //         })

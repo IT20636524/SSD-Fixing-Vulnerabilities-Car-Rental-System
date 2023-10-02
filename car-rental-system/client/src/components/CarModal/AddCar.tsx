@@ -3,7 +3,7 @@ import Modal from 'react-bootstrap/Modal';
 import { useState } from 'react';
 import Button from 'react-bootstrap/Button';
 import { Col, Row, Form } from "react-bootstrap";
-import axios from 'axios';
+import axios from '../../lib/axios';;
 import { MDBCol } from 'mdb-react-ui-kit';
 import swal from 'sweetalert';
 
@@ -71,7 +71,7 @@ export default function AddCar() {
       carData.image = filename;
 
       try {
-        await axios.post("http://localhost:5000/api/upload", data);
+        await axios.post("/upload", data);
       } catch (err) {
         console.log(err);
       }
@@ -85,7 +85,7 @@ export default function AddCar() {
     }
     else {
       console.log(carData);
-      axios.post('http://localhost:5000/api/cars', carData).then(function (response) {
+      axios.post('/cars', carData).then(function (response) {
         console.log(response.data);
         setCar_Id('');
         setCategory('');

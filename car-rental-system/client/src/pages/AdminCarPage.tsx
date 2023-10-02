@@ -1,4 +1,4 @@
-import axios from 'axios';
+import axios from '../lib/axios';;
 import React, { useEffect, useState } from 'react'
 import AdminFooter from '../components/AdminFooter'
 import AdminHeader from '../components/AdminHeader'
@@ -14,7 +14,7 @@ export default function AdminCarPage() {
     const [car, setCar] = useState<any[]>([]);
 
     useEffect(() => {
-        axios.get("http://localhost:5000/api/cars/").then(res => {
+        axios.get("/cars/").then(res => {
             setCar(res.data);
         })
             .catch(err => {

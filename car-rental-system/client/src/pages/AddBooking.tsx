@@ -1,4 +1,4 @@
-import axios from 'axios'
+import axios from '../lib/axios';
 import React, { useState } from 'react'
 import AddBookingForm from "../components/AddBookingForm";
 import BookingSidebar from "../components/BookingSidebar";

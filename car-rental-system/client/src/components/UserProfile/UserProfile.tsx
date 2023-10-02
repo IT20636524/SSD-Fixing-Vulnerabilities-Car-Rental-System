@@ -8,7 +8,7 @@ import './UserProfile.css'
 import Header from '../Header';
 import Footer from '../Footer';
 import '@fortawesome/fontawesome-svg-core/styles.css'
-import axios from 'axios';
+import axios from '../../lib/axios';;
 
 export default function UserProfile() {
 
@@ -22,15 +22,15 @@ export default function UserProfile() {
     const [email,setEmail] = useState("");
 
     useEffect(()=>{
-        const data1=(`http://localhost:5000/api/bookings/countDocuments/${name}`) ;
+        const data1=(`/bookings/countDocuments/${name}`) ;
             axios.get(data1,config).then(function(response){
                 setNewlyCreated(response.data)
             });
-        const data2=(`http://localhost:5000/api/bookings/countDocuments/${name}/pending`) ;
+        const data2=(`/bookings/countDocuments/${name}/pending`) ;
             axios.get(data2,config).then(function(response){
                 setPending(response.data)
             });
-        const data3=(`http://localhost:5000/api/bookings/countDocuments/${name}/paid`) ;
+        const data3=(`/bookings/countDocuments/${name}/paid`) ;
             axios.get(data3,config).then(function(response){
                 setPaid(response.data)
             });

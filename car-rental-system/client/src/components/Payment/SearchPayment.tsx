@@ -1,7 +1,7 @@
 import React from 'react';
 import Modal from 'react-bootstrap/Modal';
 import { useState, useEffect } from 'react';
-import axios from 'axios';
+import axios from '../../lib/axios';;
 
 
 
@@ -22,7 +22,7 @@ const SearchPayment = () => {
   
   const fetchPayment = async () => {
 
-    const res = await axios.get(`http://localhost:5000/api/payments/`+ payment_id)
+    const res = await axios.get(`/payments/`+ payment_id)
     const pays = res.data
     setName(pays.name);
     setPaymentId(pays.payment_id);
