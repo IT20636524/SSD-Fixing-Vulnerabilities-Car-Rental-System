@@ -8,7 +8,7 @@ import {
 } from '../.././components/Card/CreditCard';
 import Card from 'react-bootstrap/Card';
 import CreditCardBox from '../Card/Card';
-import axios from 'axios';
+import axios from '../../lib/axios';;
 import Modal from 'react-bootstrap/Modal';
 import { useParams } from 'react-router-dom';
 
@@ -42,7 +42,7 @@ export default function CardView() {
   useEffect(() => {
     const fetchCard = async () => {
 
-      const res = await axios.get('http://localhost:5000/api/cards',config)
+      const res = await axios.get('/cards',config)
       const cards: CreditCard[] = res.data
       setCardsDatas(cards)
       console.log(cards)
@@ -59,7 +59,7 @@ export default function CardView() {
   const params = useParams();
   const [posts, setPosts] =useState<any>([]);
   useEffect(()=> {
-      axios.get(`http://localhost:5000/api/bookings/${params.booking_id}`)
+      axios.get(`/bookings/${params.booking_id}`)
       .then(res => {
           console.log(res.data)
           setPosts(res.data)
@@ -73,7 +73,7 @@ export default function CardView() {
 
   async function fetchData() {
     
-    const cards: CreditCard[] = await axios.get('http://localhost:5000/api/cards',config)
+    const cards: CreditCard[] = await axios.get('/cards',config)
     setCardsData(cards);
     if (cards && cards.length > 0) {
       const selectedCard = cards.find((card) => card._id);
@@ -117,7 +117,7 @@ export default function CardView() {
       cardCvv: state.cardCvv,
     };
 
-    axios.put(`http://localhost:5000/api/cards/update/${state._id}`, cardData,config)
+    axios.put(`/cards/update/${state._id}`, cardData,config)
 
       .then(function (response) {
         console.log(response.data);
@@ -133,7 +133,7 @@ export default function CardView() {
   }
   function handleDeleteAction() {
 
-    axios.delete('http://localhost:5000/api/cards/delete/' + state._id,config)
+    axios.delete('/cards/delete/' + state._id,config)
       .then(function (response) {
         console.log(response.data);
 
@@ -144,7 +144,7 @@ export default function CardView() {
   }
   const DeleteShow = () => {
 
-    axios.get("http://localhost:5000/api/staff/" + state._id,config)
+    axios.get("/staff/" + state._id,config)
       .then(function (response) {
 
         setShow(true)

@@ -2,7 +2,7 @@ import React from 'react'
 import { useState, useEffect, useRef } from 'react'
 import Modal from 'react-bootstrap/Modal';
 import Button from 'react-bootstrap/Button';
-import axios from 'axios';
+import axios from '../../lib/axios';;
 import ReactToPrint from 'react-to-print';
 import moment from 'moment';
 
@@ -15,7 +15,7 @@ export default function PaymentReport() {
     const componentRef = useRef(null);
 
     useEffect(() => {
-        axios.get("http://localhost:5000/api/payments/")
+        axios.get("/payments/")
 
             .then(res => {
                 setPayment(res.data);

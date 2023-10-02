@@ -1,4 +1,4 @@
-import axios from 'axios';
+import axios from '../../lib/axios';;
 import React, {  useState,useEffect } from 'react'
 
 
@@ -8,7 +8,7 @@ export default function AdminPayments() {
 
   
   useEffect(() => {
-    axios.get("http://localhost:5000/api/payments/")
+    axios.get("/payments/")
 
     .then(res => {   
         setPayment(res.data);

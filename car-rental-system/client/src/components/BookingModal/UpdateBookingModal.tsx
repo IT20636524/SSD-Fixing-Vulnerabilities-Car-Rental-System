@@ -1,4 +1,4 @@
-import axios from 'axios';
+import axios from '../../lib/axios';;
 import React, { useState } from 'react'
 import { Button, Col, Form, Modal, Row } from 'react-bootstrap'
 import swal from 'sweetalert';
@@ -33,7 +33,7 @@ export default function UpdateBookingModal({booking_id,getData}:any) {
     }
 
     const updateShow = () =>{
-        axios.get("http://localhost:5000/api/bookings/getone/"+booking_id)
+        axios.get("/bookings/getone/"+booking_id)
         .then(function(response){
             setName(response.data['name']);
             setAddress(response.data['address']);
@@ -50,7 +50,7 @@ export default function UpdateBookingModal({booking_id,getData}:any) {
     function submitForm(e:any){
         e.preventDefault();
         console.log(bookingData);
-        axios.put("http://localhost:5000/api/bookings/update/"+booking_id,bookingData)
+        axios.put("/bookings/update/"+booking_id,bookingData)
         .then(function(response) {
             console.log(response);
             getData()

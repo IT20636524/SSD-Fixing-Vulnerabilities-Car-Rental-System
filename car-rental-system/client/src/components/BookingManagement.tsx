@@ -1,4 +1,4 @@
-import axios from 'axios';
+import axios from '../lib/axios';;
 import React, { useEffect, useState } from 'react'
 import swal from 'sweetalert';
 
@@ -36,7 +36,7 @@ export default function BookingManagement() {
 
     const getData = () => {
 
-        axios.get("http://localhost:5000/api/bookings/all").then(res => {
+        axios.get("/bookings/all").then(res => {
             console.log(res.data);
             setBookings(res.data);
         }).catch(error => {
@@ -70,7 +70,7 @@ export default function BookingManagement() {
             vehicle_pic: e.vehicle_pic
         }
         console.log(bookingData);
-        axios.post('http://localhost:5000/api/acceptedbookings/add', bookingData)
+        axios.post('/acceptedbookings/add', bookingData)
             .then(function (response) {
                 console.log(response);
                 console.log("successful")

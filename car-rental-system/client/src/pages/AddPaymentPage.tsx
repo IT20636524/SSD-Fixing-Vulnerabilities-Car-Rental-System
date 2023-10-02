@@ -2,7 +2,7 @@ import React, { useEffect, useState, } from 'react'
 import { Link } from 'react-router-dom';
 import swal from 'sweetalert';
 import { useNavigate } from 'react-router-dom';
-import axios from 'axios';
+import axios from '../lib/axios';;
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 import BookingDetails from '../components/Payment/BookingDetails';
@@ -41,7 +41,7 @@ export default function AddPayment() {
 
   
   useEffect(() => {
-    axios.get(`http://localhost:5000/api/bookings/getone/${params.booking_id}`)
+    axios.get(`/bookings/getone/${params.booking_id}`)
 
       .then(res => {
       
@@ -69,7 +69,7 @@ export default function AddPayment() {
   useEffect(() => {
     const fetchCard = async () => {
 
-      const res = await axios.get('http://localhost:5000/api/cards', config)
+      const res = await axios.get('/cards', config)
       const cards: CreditCard[] = res.data;
       setCardsDatas(cards)
       console.log(cards)
@@ -100,7 +100,7 @@ export default function AddPayment() {
       swal(" Fields Cannot empty !", "Please enter all data !", "error");
     } else {
       console.log(PayData);
-      axios.post("http://localhost:5000/api/payments", PayData)
+      axios.post("/payments", PayData)
         .then(function (response: any) {
           console.log(response);
           setBookingId("");
@@ -108,7 +108,7 @@ export default function AddPayment() {
           setCard("");
           setCostPerDay("");
           setContactNumber("");
-          axios.put("http://localhost:5000/api/bookings/update/"+booking_id,BookingData)
+          axios.put("/bookings/update/"+booking_id,BookingData)
             .then(function(res) {
                 console.log(res);
             })

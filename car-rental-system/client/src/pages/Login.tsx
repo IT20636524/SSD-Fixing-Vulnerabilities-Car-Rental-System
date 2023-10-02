@@ -10,7 +10,7 @@ export default function Login() {
     const handleSubmit = async (e:any) => {
         e.preventDefault();
         try {
-          const res = await axios.post("http://localhost:5000/api/UserAuth/login", { 
+          const res = await axios.post("/UserAuth/login", { 
             email: emailRef.current?.value,
             password: passwordRef.current?.value,
            });
@@ -26,7 +26,7 @@ export default function Login() {
         try {
             const user = await signWithGoogle();
             console.log(user);
-            const res = await axios.post("http://localhost:5000/api/UserAuth/register?provider=google", { 
+            const res = await axios.post("/UserAuth/register?provider=google", { 
                 name: user?.displayName,
                 email:user?.email,
                 profile_pic:user?.photoURL,
@@ -35,7 +35,7 @@ export default function Login() {
             });
             console.log(res);
 
-            // const response = await axios.post("http://localhost:5000/api/UserAuth/login", { 
+            // const response = await axios.post("/UserAuth/login", { 
             //     email: ,
             // });
             // localStorage.setItem('user', JSON.stringify(response.data.data.user))
@@ -57,7 +57,7 @@ export default function Login() {
     //     // console.log(emailRef);
     //     console.log(passwordRef);
     //     try{
-    //         const res = await axios.post("http://localhost:5000/api/UserAuth/login",{
+    //         const res = await axios.post("/UserAuth/login",{
     //             email: emailRef.current?.value,
     //             password: passwordRef.current?.value,
     //         })

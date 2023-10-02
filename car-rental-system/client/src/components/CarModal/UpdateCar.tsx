@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { Col, Row, Form } from "react-bootstrap";
 import Modal from 'react-bootstrap/Modal';
 import Button from 'react-bootstrap/Button';
-import axios from 'axios';
+import axios from '../../lib/axios';;
 import swal from 'sweetalert';
 
 export default function UpdateCar(props: { car_Id: string; }) {
@@ -54,7 +54,7 @@ export default function UpdateCar(props: { car_Id: string; }) {
         data.append("file", file);
         carData.image = filename;
         try {
-            axios.put("http://localhost:5000/api/cars/update/", data);
+            axios.put("/cars/update/", data);
         } catch (err) {
             alert(err)
         }
@@ -63,7 +63,7 @@ export default function UpdateCar(props: { car_Id: string; }) {
     const updateShow = () => {
         console.log(props.car_Id)
 
-        axios.get("http://localhost:5000/api/cars/" + props.car_Id).then(function (response) {
+        axios.get("/cars/" + props.car_Id).then(function (response) {
             setCar_Id(response.data['']);
             setCategory(response.data['category']);
             setModel(response.data['model']);
@@ -86,7 +86,7 @@ export default function UpdateCar(props: { car_Id: string; }) {
 
     function submitForm(e: { preventDefault: () => void; }) {
         e.preventDefault();
-        axios.put(`http://localhost:5000/api/cars/update/${props.car_Id}`, carData).then(function (response) {
+        axios.put(`/cars/update/${props.car_Id}`, carData).then(function (response) {
             console.log(response);
             setCar_Id('');
             setCategory('');

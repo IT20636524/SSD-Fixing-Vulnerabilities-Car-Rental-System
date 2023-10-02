@@ -1,5 +1,5 @@
 import React, { useEffect, useState , } from 'react'
-import axios from 'axios';
+import axios from '../lib/axios';;
 import { useParams  } from "react-router-dom";
 import Header from '../components/Header';
 import Footer from '../components/Footer';
@@ -25,7 +25,7 @@ const [image , setImages] = useState("");
 const PF = "http://localhost:5000/images/"
 
     useEffect(()=> {
-        axios.get(`http://localhost:5000/api/staff/${params.driver_code}`)
+        axios.get(`/staff/${params.driver_code}`)
         .then(res => {
             console.log(res.data)
             setPosts(res.data)
