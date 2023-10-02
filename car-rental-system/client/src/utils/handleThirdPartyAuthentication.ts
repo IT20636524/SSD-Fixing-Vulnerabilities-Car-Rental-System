@@ -1,4 +1,4 @@
-import axios from "axios";
+import axios from "../lib/axios";
 import { signInWithFacebook, signInWithGoogle } from "./ssoAuthenticator";
 
 export default async (provider?: string) => {
@@ -11,7 +11,7 @@ export default async (provider?: string) => {
             default:
                 user = await signInWithGoogle();
         }
-        const res = await axios.post("http://localhost:5000/api/UserAuth/validate", {
+        const res = await axios.post("/UserAuth/validate", {
             name: user?.displayName,
             email: user?.email,
             profile_pic: user?.photoURL,
