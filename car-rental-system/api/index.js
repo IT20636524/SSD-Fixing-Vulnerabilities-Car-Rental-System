@@ -92,6 +92,12 @@ app.use(
   })
 );
 
+// set X-Frame-Options header to deny embedding in frames
+app.use((req, res, next) => {
+  res.setHeader("X-Frame-Options", "DENY");
+  next();
+});
+
 app.use("/api/UserAuth", UserAuthRoute);
 app.use("/api/bookings", BookingRoute);
 app.use("/api/acceptedbookings", AcceptedBookingRoute);
