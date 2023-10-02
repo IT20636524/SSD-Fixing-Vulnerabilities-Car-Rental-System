@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import CardForm from '../Card/CardForm';
 import { CreditCard } from '../Card/CreditCard';
 import Cards from '../Card/Card';
-import axios from 'axios';
+import axios from '../../lib/axios';;
 import { useParams } from 'react-router-dom';
 
 const initialState: CreditCard = {
@@ -43,7 +43,7 @@ export default function AddCard() {
   const params = useParams();
   const [posts, setPosts] =useState<any>([]);
   useEffect(()=> {
-      axios.get(`http://localhost:5000/api/bookings/${params.booking_id}`)
+      axios.get(`/bookings/${params.booking_id}`)
       .then(res => {
           console.log(res.data)
           setPosts(res.data)
@@ -70,7 +70,7 @@ export default function AddCard() {
     console.log(cardData);
     console.log(state);
 
-    axios.post('http://localhost:5000/api/cards', cardData, config)
+    axios.post('/cards', cardData, config)
       .then(function (response) {
         console.log(response.data);
         setID('');

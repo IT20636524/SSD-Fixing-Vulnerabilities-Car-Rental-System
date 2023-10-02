@@ -1,6 +1,6 @@
 import { useParams } from 'react-router-dom';
 import React, { useEffect, useState , } from 'react'
-import axios from 'axios';
+import axios from '../../lib/axios';;
 
 export default function PaymentInvoice() {
 
@@ -13,7 +13,7 @@ export default function PaymentInvoice() {
 
 
     useEffect(()=> {
-        axios.get(`http://localhost:5000/api/payments/${params.payment_id}`)
+        axios.get(`/payments/${params.payment_id}`)
         .then(res => {
             console.log(res.data)
             setPosts(res.data)
@@ -27,7 +27,7 @@ export default function PaymentInvoice() {
     const paramsb = useParams();
   
     useEffect(() => {
-      axios.get(`http://localhost:5000/api/bookings/${paramsb.booking_id}`)
+      axios.get(`/bookings/${paramsb.booking_id}`)
   
         .then(res => {
         

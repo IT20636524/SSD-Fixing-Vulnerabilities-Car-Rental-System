@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from 'react'
 import Modal from 'react-bootstrap/Modal';
 import Button from 'react-bootstrap/Button';
 import { Col, Row, Form } from "react-bootstrap";
-import axios from 'axios';
+import axios from '../../lib/axios';;
 import { useReactToPrint } from 'react-to-print';
 import ReactToPrint from 'react-to-print';
 
@@ -32,7 +32,7 @@ export default function StaffReport() {
 
 
   const getStaff = () => {
-    axios.get(`http://localhost:5000/api/staff`)
+    axios.get(`/staff`)
 
       .then(res => {
         console.log(res.data)
@@ -49,7 +49,7 @@ export default function StaffReport() {
 
 
   useEffect(() => {
-    axios.get("http://localhost:5000/api/staff/")
+    axios.get("/staff/")
 
       .then(res => {
         setStaff(res.data);

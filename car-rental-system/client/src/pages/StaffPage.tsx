@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
+import axios from '../lib/axios';;
 import "../index.css"
 import Header from '../components/Header';
 import Footer from '../components/Footer';
@@ -22,7 +22,7 @@ export default function Staff() {
 
   
   useEffect(() => {
-    axios.get("http://localhost:5000/api/staff/")
+    axios.get("/staff/")
 
     .then(res => {   
       

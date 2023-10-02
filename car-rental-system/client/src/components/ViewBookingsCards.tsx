@@ -1,4 +1,4 @@
-import axios from 'axios';
+import axios from '../lib/axios';;
 import { builtinModules } from 'module'
 import React, { useEffect, useState } from 'react'
 import DeleteBookingModal from './BookingModal/DeleteBookingModal'
@@ -41,7 +41,7 @@ export default function ViewBookingsCards() {
 
     const getData =()=>{
 
-        axios.get("http://localhost:5000/api/bookings/Prathibha",config).then(res => {
+        axios.get("/bookings/Prathibha",config).then(res => {
             console.log(res.data);
             setBookings(res.data);
         }).catch(error => {

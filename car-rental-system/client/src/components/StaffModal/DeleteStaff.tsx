@@ -2,7 +2,7 @@ import Modal from 'react-bootstrap/Modal';
 import Button from 'react-bootstrap/Button';
 import React, {  useState  } from 'react'
 
-import axios from 'axios';
+import axios from '../../lib/axios';;
 import swal from 'sweetalert'
 
 
@@ -40,7 +40,7 @@ export default function DeleteStaff(props: { driver_code: string; }) {
     const DeleteShow = () => {
         console.log( props.driver_code)
        
-        axios.get("http://localhost:5000/api/staff/" + props.driver_code)
+        axios.get("/staff/" + props.driver_code)
         .then(function (response) {
               setDriverCode('');
               setName('');
@@ -70,7 +70,7 @@ export default function DeleteStaff(props: { driver_code: string; }) {
 
     function submitForm(e: { preventDefault: () => void; }){
         e.preventDefault();
-        axios.delete(`http://localhost:5000/api/staff/delete/${props.driver_code}`,config)
+        axios.delete(`/staff/delete/${props.driver_code}`,config)
             .then(function (response) {
                 setShow(false);
                 swal({ text: "Staff Successfully Deleted", icon: "success",buttons: {

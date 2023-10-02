@@ -3,7 +3,7 @@ import Modal from 'react-bootstrap/Modal';
 import { useState } from 'react';
 import Button from 'react-bootstrap/Button';
 import { Col, Row, Form } from "react-bootstrap";
-import axios from 'axios';
+import axios from '../../lib/axios';;
 import { MDBCol } from 'mdb-react-ui-kit';
 import swal from 'sweetalert';
 
@@ -62,7 +62,7 @@ export default function AddStaff() {
       data.append("file", file);
       staffData.image=  filename;
       try {
-         await axios.post("http://localhost:5000/api/upload", data);
+         await axios.post("/upload", data);
       } catch (err) {
         console.log(err);
       }
@@ -75,7 +75,7 @@ export default function AddStaff() {
             }  
           else{
             console.log(staffData);
-            axios.post('http://localhost:5000/api/staff', staffData)
+            axios.post('/staff', staffData)
             .then(function (response) {
               console.log(response.data);
               setDriverCode('');

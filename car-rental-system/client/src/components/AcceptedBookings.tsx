@@ -1,4 +1,4 @@
-import axios from 'axios';
+import axios from '../lib/axios';;
 import React, { useEffect, useState } from 'react'
 import swal from 'sweetalert';
 
@@ -37,7 +37,7 @@ export default function AcceptedBookings() {
 
     const getData = () => {
 
-        axios.get("http://localhost:5000/api/acceptedbookings/").then(res => {
+        axios.get("/acceptedbookings/").then(res => {
             console.log(res.data);
             setBookings(res.data);
         }).catch(error => {
