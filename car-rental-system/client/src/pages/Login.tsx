@@ -1,51 +1,27 @@
 import axios from "axios";
-import React, { useContext, useRef, useState } from "react";
-import { Context } from "../context/Context";
-import "../pages/styles.css"
-import { signWithGoogle } from "../utils/loginWithGoogle";
+import {useRef} from "react";
+import "../pages/styles.css";
+import handleThirdPartyAuthentication from "../utils/handleThirdPartyAuthentication";
 // import jwt_decode from "jwt-decode";
 
 export default function Login() {
 
-    const handleSubmit = async (e:any) => {
+    const handleSubmit = async (e: any) => {
         e.preventDefault();
         try {
-          const res = await axios.post("http://localhost:5000/api/UserAuth/login", { 
-            email: emailRef.current?.value,
-            password: passwordRef.current?.value,
-           });
-          localStorage.setItem('user', JSON.stringify(res.data.data.user))
-          localStorage.setItem('access_token', res.data.data.access_token)
-          window.location.href = "/";
-        } catch (err) {
-          console.log(err);
-        }
-      };
-
-      const handleLoginWithGoogle = async () => {
-        try {
-            const user = await signWithGoogle();
-            console.log(user);
-            const res = await axios.post("http://localhost:5000/api/UserAuth/register?provider=google", { 
-                name: user?.displayName,
-                email:user?.email,
-                profile_pic:user?.photoURL,
-                firebase_uid:user?.uid
-
+            const res = await axios.post("http://localhost:5000/api/UserAuth/login", {
+                email: emailRef.current?.value,
+                password: passwordRef.current?.value,
             });
-            console.log(res);
-
-            // const response = await axios.post("http://localhost:5000/api/UserAuth/login", { 
-            //     email: ,
-            // });
-            // localStorage.setItem('user', JSON.stringify(response.data.data.user))
-            // localStorage.setItem('access_token', response.data.data.access_token)
-            // window.location.href = "/";
-        } catch (error) {
-            console.log(error);
+            localStorage.setItem('user', JSON.stringify(res.data.data.user))
+            localStorage.setItem('access_token', res.data.data.access_token)
+            window.location.href = "/";
+        } catch (err) {
+            console.log(err);
         }
-        
-      }
+    };
+
+    
 
     const emailRef = useRef<HTMLInputElement>(null);
     const passwordRef = useRef<HTMLInputElement>(null);
@@ -63,7 +39,7 @@ export default function Login() {
     //         })
     //         console.log(res);
     //         dispatch({type:"LOGIN_SUCCESS",payload:res.data});
-            
+
     //     }catch(err){
     //         dispatch({type:"LOGIN_FAILURE"});
     //     }
@@ -83,7 +59,7 @@ export default function Login() {
                                 <span style={{ color: "hsl(218, 81%, 75%)" }}>IN SRI LANKA</span>
                             </h1>
                             <p className="mb-4 opacity-70" style={{ color: "hsl(218, 81%, 85%)" }}>
-                            Use the quick-and-easy booking form above in order to instantly compare all vehicles and offers and make your car rental resevation today!
+                                Use the quick-and-easy booking form above in order to instantly compare all vehicles and offers and make your car rental resevation today!
                             </p>
                         </div>
 
@@ -95,43 +71,46 @@ export default function Login() {
                                 <div className="card-body px-4 py-5 px-md-5">
                                     <form onSubmit={handleSubmit}>
                                         {/* <form> */}
-                                        <br/>
-                                        <br/>
+                                        <br />
+                                        <br />
 
                                         {/* <!-- Email input --> */}
                                         <div className="form-outline mb-4" >
-                                            <input type="email" id="form3Example3" className="form-control" ref={emailRef}/>
+                                            <input type="email" id="form3Example3" className="form-control" ref={emailRef} />
                                             <label className="form-label reg-label" htmlFor="form3Example3">Email address</label>
                                         </div>
 
                                         {/* <!-- Password input --> */}
                                         <div className="form-outline mb-4" >
-                                            <input type="password" id="form3Example4" className="form-control" ref={passwordRef}/>
+                                            <input type="password" id="form3Example4" className="form-control" ref={passwordRef} />
                                             <label className="form-label reg-label" htmlFor="form3Example4">Password</label>
                                         </div>
 
-                                        <br/>
-                                        <br/>
-                                        <br/>
+                                        <br />
+                                        <br />
+                                        <br />
 
                                         {/* <!-- Submit button --> */}
                                         <button type="submit" className="btn btn-primary btn-block mb-4">
                                             Sign In
                                         </button>
-                                        <button type="button" className="btn btn-primary btn-block mb-4" onClick={handleLoginWithGoogle}>
-                                            Sign In Google
+                                        <button type="button" className="btn btn-primary btn-block mb-4" onClick={() => handleThirdPartyAuthentication()}>
+                                            Google Sign In
                                         </button>
-                                        <br/>
-                                        <br/>
+                                        <button type="button" className="btn btn-primary btn-block mb-4" onClick={() => handleThirdPartyAuthentication("facebook")}>
+                                            Facebook Sign In
+                                        </button>
+                                        <br />
+                                        <br />
 
                                         {/* <!-- Register buttons --> */}
                                         <div className="text-center">
                                             <p>or sign up with:</p>
                                             <a className="login-link" href="/sign-up">
-                                                Sign up
+                                                Sign Up
                                             </a>
                                         </div>
-                                        
+
 
                                     </form>
                                 </div>

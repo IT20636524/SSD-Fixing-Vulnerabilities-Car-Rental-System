@@ -4,13 +4,13 @@ import { Context } from '../context/Context';
 
 export default function Header() {
   const { user, dispatch } = useContext(Context);
-    const handleLogout = () => {
-        dispatch({ type: "LOGOUT" });
-    }
+  const handleLogout = () => {
+    dispatch({ type: "LOGOUT" });
+  }
   return (
     <>
 
-      <nav className="navbar navbar-expand-lg navbar-light bg-light" style={{height:"100px"}}>
+      <nav className="navbar navbar-expand-lg navbar-light bg-light" style={{ height: "100px" }}>
 
         <div className="container-fluid">
 
@@ -66,31 +66,28 @@ export default function Header() {
             </ul>
 
           </div>
-{!localStorage.getItem('user')?(
-  <>
-  <a href="/login">
-  <button type="button" className="btn btn-light me-3" style={{width:"100px", height:"35px", fontSize:"13px"}}>
-    Login
-  </button>
+          {!localStorage.getItem('user') ? (
+            <>
+              <a href="/login">
+                <button type="button" className="btn btn-light me-3" style={{ width: "100px", height: "35px", fontSize: "13px" }}>
+                  Login
+                </button>
 
-</a>
-<a href="/sign-up">
+              </a>
+              <a href="/sign-up">
 
-  <button type="button" className="btn btn-light me-3" style={{width:"100px", height:"35px", fontSize:"13px"}}>
-    Sign up
-  </button>
+                <button type="button" className="btn btn-light me-3" style={{ width: "100px", height: "35px", fontSize: "13px" }}>
+                  Sign up
+                </button>
 
-</a>
-</>
+              </a>
+            </>
 
-):(
-  <></>
-) 
+          ) : (
+            <></>
+          )
+          }
 
-
-
-}
-        
 
           <form className="d-flex input-group w-auto me-4">
             <input

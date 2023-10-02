@@ -9,6 +9,7 @@ import { TextField } from '../components/TextField';
 import * as Yup from 'yup';
 import axios from 'axios';
 import swal from 'sweetalert';
+import handleThirdPartyAuthentication from '../utils/handleThirdPartyAuthentication';
 
 export const Signup = () => {
     const validate = Yup.object({
@@ -33,6 +34,7 @@ export const Signup = () => {
         status[index] = !status[index]
         setCheckboxStatus(status)
     }
+
     return (
         <Formik<any>
             initialValues={{
@@ -48,7 +50,7 @@ export const Signup = () => {
                     console.log(response);
                     swal({ text: "Successfully Added", icon: "success" })
                 })
-                
+
 
             }}
         >
@@ -60,26 +62,32 @@ export const Signup = () => {
                         <TextField label="Email" name="email" type="email" />
                         <TextField label="password" name="password" type="password" />
                         <TextField label="Confirm Password" name="confirmPassword" type="password" />
-                        <br/>
+                        <br />
                         <div className="form-check d-flex justify-content-center mb-5">
-                                                    {Array(1).fill(0).map((_, index) => <input className="form me-2" type="checkbox" checked={checkboxStatus[index]} onChange={() => buttonHandler(index)} />)}
-                                                    <label className="form-check-label reg-label" htmlFor="form2Example3">
-                                                        I agree all statements in <a href="#!">Terms of service</a>
-                                                    </label>
-                                                    {/* <button type="submit" className="btn btn-primary btn-lg" disabled={checkboxStatus.filter(status => status === true).length != 1}>Register</button> */}
-                                                    {/* {Array(1).fill(0).map((_, index) => <input type="checkbox" checked={checkboxStatus[index]} onChange={() => buttonHandler(index)} />)} */}
-                                                </div>
+                            {Array(1).fill(0).map((_, index) => <input className="form me-2" type="checkbox" checked={checkboxStatus[index]} onChange={() => buttonHandler(index)} />)}
+                            <label className="form-check-label reg-label" htmlFor="form2Example3">
+                                I agree all statements in <a href="#!">Terms of service</a>
+                            </label>
+                            {/* <button type="submit" className="btn btn-primary btn-lg" disabled={checkboxStatus.filter(status => status === true).length != 1}>Register</button> */}
+                            {/* {Array(1).fill(0).map((_, index) => <input type="checkbox" checked={checkboxStatus[index]} onChange={() => buttonHandler(index)} />)} */}
+                        </div>
 
-                                                <div className="d-flex justify-content-center mx-4 mb-3 mb-lg-4">
-                                                <button type="submit" className="btn btn-primary btn-lg reg-btn1" disabled={checkboxStatus.filter(status => status === true).length != 1}>Register</button>
-                                                <button className="btn btn-danger btn-lg reg-btn2" type="reset">Reset</button>
-                                                </div>    
-                                                <div className="d-flex justify-content-center mx-4 mb-3 mb-lg-4">
-                                                    <label className='reg-label'>Already have an account..?</label>
-                                                </div>
-                                                <div className="d-flex justify-content-center mx-4 mb-3 mb-lg-4">
-                                                    <a className='login-link' href="/login">Login</a>
-                                                </div>                   
+                        <div className="d-flex justify-content-center mx-4 mb-3 mb-lg-4">
+                            <button type="submit" className="btn btn-primary btn-lg reg-btn1" disabled={checkboxStatus.filter(status => status === true).length != 1}>Register</button>
+                            <button className="btn btn-danger btn-lg reg-btn2" type="reset">Reset</button>
+                        </div>
+                        <button type="button" className="btn btn-primary btn-block mb-4" onClick={() => handleThirdPartyAuthentication()}>
+                            Google Sign In
+                        </button>
+                        <button type="button" className="btn btn-primary btn-block mb-4" onClick={() => handleThirdPartyAuthentication("facebook")}>
+                            Facebook Sign In
+                        </button>
+                        <div className="d-flex justify-content-center mx-4 mb-3 mb-lg-4">
+                            <label className='reg-label'>Already have an account..?</label>
+                        </div>
+                        <div className="d-flex justify-content-center mx-4 mb-3 mb-lg-4">
+                            <a className='login-link' href="/login">Login</a>
+                        </div>
                     </Form>
                 </div>
             )}
