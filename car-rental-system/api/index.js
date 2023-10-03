@@ -31,6 +31,12 @@ app.use(cors(corsOptions));
 dotenv.config();
 app.use(express.json());
 
+// Add middleware to set X-XSS-Protection header
+app.use((req, res, next) => {
+  res.header("X-XSS-Protection", "1; mode=block");
+  next();
+});
+
 mongoose
   .connect(process.env.MONGO_URL, {
     useNewUrlParser: true,
