@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react'
-import axios from 'axios'
+import axios from '../lib/axios';
 import '../components/styles.css'
 import { Col, Row, Form } from "react-bootstrap";
 import Footer from './Footer'
@@ -37,7 +37,7 @@ export default function AddBookingForm() {
 
 
     // get car details
-    axios.get("http://localhost:5000/api/cars/"+id,config).then(function (response) {
+    axios.get("/cars/"+id,config).then(function (response) {
         console.log(response);
         setCar_Id(response.data['car_Id']);
         setModel(response.data['model']);
@@ -78,7 +78,7 @@ export default function AddBookingForm() {
             swal(" Fields Cannot empty !","Please enter all data !", "error");
         }else{
             console.log(bookingData);
-            axios.post('http://localhost:5000/api/bookings/add',bookingData,config)
+            axios.post('/bookings/add',bookingData,config)
             .then(function(response) {
                 console.log(response);
                 setAddress('');
@@ -87,7 +87,7 @@ export default function AddBookingForm() {
                 setNoOfDays('');
                 setLocation('');
                 swal({ text: "Successfully Added", icon: "success"})
-                axios.put("http://localhost:5000/api/cars/update/"+id,carData).then(function(res){
+                axios.put("/cars/update/"+id,carData).then(function(res){
                     console.log(res);
                 }).catch(function(err){
                     console.log(err);

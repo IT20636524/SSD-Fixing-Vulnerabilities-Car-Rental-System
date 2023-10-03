@@ -1,5 +1,6 @@
 const express = require("express");
 const app = express();
+const helmet = require("helmet"); // Add Helmet for security headers
 app.disable("x-powered-by");
 const dotenv = require("dotenv");
 const mongoose = require("mongoose");
@@ -16,7 +17,7 @@ const multer = require("multer");
 const path = require("path");
 const jwt = require("jsonwebtoken");
 
-const cors=require("cors");
+const cors = require("cors");
 
 const corsOptions = {
   origin: ["http://example.com", "http://localhost:3000"],
@@ -24,27 +25,35 @@ const corsOptions = {
   optionSuccessStatus: 200,
 };
 
-app.use(cors(corsOptions)) 
-// app.use(cors()) 
+app.use(cors(corsOptions));
+// app.use(cors())
 
 dotenv.config();
 app.use(express.json());
 
-mongoose.connect(process.env.MONGO_URL,{
-    useNewUrlParser : true,
+// Add middleware to set X-XSS-Protection header
+app.use((req, res, next) => {
+    res.header("X-XSS-Protection", "1; mode=block");
+    next();
+});
+
+
+mongoose
+  .connect(process.env.MONGO_URL, {
+    useNewUrlParser: true,
     useUnifiedTopology: true,
-})
-.then(console.log("Connected to MongoDB"))
-.catch(err=>console.log(err));
+  })
+  .then(console.log("Connected to MongoDB"))
+  .catch((err) => console.log(err));
 
 const storage = multer.diskStorage({
-    destination: (req, file, cb) => {
-      console.log(req);
-      cb(null, "api/images");
-    },
-    filename: (req, file, cb) => {
-      cb(null, req.body.name);
-    },
+  destination: (req, file, cb) => {
+    console.log(req);
+    cb(null, "api/images");
+  },
+  filename: (req, file, cb) => {
+    cb(null, req.body.name);
+  },
 });
 
 //Rejecting requests with significant content length- prevents DoS attacks
@@ -71,6 +80,43 @@ app.put("/api/update", update.single("file"), (req, res) => {
   res.status(200).json("File has been updated");
 });
 
+// Add Content Security Policy header
+app.use(
+  helmet.contentSecurityPolicy({
+    directives: {
+      defaultSrc: ["'self'"],
+      scriptSrc: [
+        "'self'",
+        "'unsafe-inline'",
+        "https://cdnjs.cloudflare.com",
+        "https://ajax.googleapis.com",
+      ],
+      styleSrc: ["'self'", "'unsafe-inline'", "https://fonts.googleapis.com"],
+      imgSrc: ["'self'"],
+      fontSrc: ["'self'"],
+      reportUri: "/csp-report",
+    },
+  })
+);
+
+// set X-Frame-Options header to deny embedding in frames
+app.use((req, res, next) => {
+  res.setHeader("X-Frame-Options", "DENY");
+  next();
+});
+// Add Strict-Transport-Security header
+// app.use(
+//   helmet.strictTransportSecurity({
+//     maxAge: 31536000, // 1 year in seconds
+//     includeSubDomains: true, // Optional, include subdomains
+//     preload: true, // Optional, indicate that the site is in the HSTS preload list
+//   })
+// );
+
+
+// Add X-Content-Type-Options header
+app.use(helmet.noSniff());
+
 app.use("/api/UserAuth", UserAuthRoute);
 app.use("/api/bookings", BookingRoute);
 app.use("/api/acceptedbookings", AcceptedBookingRoute);
@@ -82,6 +128,6 @@ app.use("/api/contactus", ContactUsRoute);
 app.use("/api/feedback", FeedbackRoute);
 app.use("/images", express.static(path.join(__dirname, "/images")));
 
-app.listen("5000", ()=>{
-    console.log("Backend is running.");
+app.listen("5000", () => {
+  console.log("Backend is running.");
 });

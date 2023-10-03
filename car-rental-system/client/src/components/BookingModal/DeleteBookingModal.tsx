@@ -1,4 +1,4 @@
-import axios from 'axios';
+import axios from '../../lib/axios';;
 import React, { useState } from 'react'
 import { Button, Modal } from 'react-bootstrap';
 import swal from 'sweetalert';
@@ -11,7 +11,7 @@ export default function DeleteBookingModal({booking_id,getData}:any) {
 
     function submitForm(e:any){
         e.preventDefault();
-        axios.delete(`http://localhost:5000/api/bookings/delete/`+booking_id).then(function (response){
+        axios.delete(`/bookings/delete/`+booking_id).then(function (response){
             swal({ text: "Booking Successfully Deleted", icon: "success"
               });
             getData()

@@ -1,4 +1,4 @@
-import axios from 'axios';
+import axios from '../../lib/axios';;
 import { timeStamp } from 'console';
 import { MDBCol } from 'mdb-react-ui-kit'
 import React, { useState } from 'react'
@@ -22,7 +22,7 @@ export default function SearchBookingModal({ bookingId }: any) {
     const [payment_status, setPaymentStatus] = useState("");
 
 
-    axios.get("http://localhost:5000/api/bookings/getone/" + bookingId)
+    axios.get("/bookings/getone/" + bookingId)
         .then(function (response) {
             setBookingId(response.data['booking_id']);
             setName(response.data['name']);

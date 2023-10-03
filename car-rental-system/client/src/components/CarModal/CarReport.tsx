@@ -1,4 +1,4 @@
-import axios from 'axios';
+import axios from '../../lib/axios';;
 import React, { useEffect, useRef, useState } from 'react'
 import { Button, Modal } from 'react-bootstrap'
 import ReactToPrint from 'react-to-print';
@@ -13,7 +13,7 @@ export default function CarReport() {
     const componentRef = useRef(null);
 
     useEffect(() => {
-        axios.get("http://localhost:5000/api/cars/").then(res => {
+        axios.get("/cars/").then(res => {
             setCar(res.data);
         })
             .catch(err => {

@@ -1,5 +1,5 @@
 import BookingCard from './BookingCard';
-import axios from 'axios';
+import axios from '../../lib/axios';;
 import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom';
 import { useParams } from 'react-router-dom';
@@ -9,7 +9,7 @@ export default function BookingDetails() {
     const params = useParams();
     const [posts, setPosts] =useState<any>([]);
     useEffect(()=> {
-        axios.get(`http://localhost:5000/api/bookings/${params.booking_id}`)
+        axios.get(`/bookings/${params.booking_id}`)
         .then(res => {
             console.log(res.data)
             setPosts(res.data)

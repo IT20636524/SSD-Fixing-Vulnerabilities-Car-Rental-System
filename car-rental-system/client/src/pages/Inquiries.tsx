@@ -1,4 +1,4 @@
-import axios from 'axios';
+import axios from '../lib/axios';;
 import React, { useEffect, useState } from 'react'
 import { Link, useParams } from 'react-router-dom';
 import Footer from '../components/Footer'
@@ -18,7 +18,7 @@ export default function Inquiries() {
 
   useEffect(() => {
     const fetchcar = async () => {
-      const res = await axios.get('http://localhost:5000/api/cars/category/available/Luxury/')
+      const res = await axios.get('/cars/category/available/Luxury/')
       setlCars(res.data)
       setImage(res.data['image'])
 
@@ -28,7 +28,7 @@ export default function Inquiries() {
 
   useEffect(() => {
     const fetchcar = async () => {
-      const res = await axios.get('http://localhost:5000/api/cars/category/available/Premium/')
+      const res = await axios.get('/cars/category/available/Premium/')
       setpCars(res.data)
       setImage(res.data['image'])
 
@@ -38,7 +38,7 @@ export default function Inquiries() {
 
   useEffect(() => {
     const fetchcar = async () => {
-      const res = await axios.get('http://localhost:5000/api/cars/category/available/General/')
+      const res = await axios.get('/cars/category/available/General/')
       setgCars(res.data)
       setImage(res.data['image'])
 

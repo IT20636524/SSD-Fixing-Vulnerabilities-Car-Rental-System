@@ -15,7 +15,7 @@ export default function AdminFeedback() {
 
   
   useEffect(() => {
-    axios.get("http://localhost:5000/api/feedback/")
+    axios.get("/feedback/")
 
     .then(res => {   
         setComment(res.data);

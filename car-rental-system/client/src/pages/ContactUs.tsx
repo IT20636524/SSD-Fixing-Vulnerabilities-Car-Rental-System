@@ -2,7 +2,7 @@ import React  from 'react'
 import AdminFooter from '../components/AdminFooter'
 import AdminHeader from '../components/AdminHeader'
 import { useState } from 'react';
-import axios from 'axios';
+import axios from '../lib/axios';;
 import swal from 'sweetalert';
 import Button from 'react-bootstrap/Button';
 import AdminSideNav from '../components/AdminSideNav'
@@ -38,7 +38,7 @@ export default function ContactUs() {
       swal(" Fields Cannot empty !","Please enter all data !", "error");
     }else{
       console.log(userData);
-      axios.post("http://localhost:5000/api/contactus/add",userData)
+      axios.post("/contactus/add",userData)
       .then(function (response) {
         console.log(response);
         setCustomerName("");

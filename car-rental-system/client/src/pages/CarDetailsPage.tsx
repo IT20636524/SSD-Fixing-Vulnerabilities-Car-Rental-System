@@ -1,4 +1,4 @@
-import axios from 'axios';
+import axios from '../lib/axios';;
 import React, { useEffect, useState } from 'react'
 import { Button, Col, Form, Row } from 'react-bootstrap';
 import { Link, useParams } from 'react-router-dom';
@@ -38,7 +38,7 @@ export default function CarDetailsPage() {
         availability
     }
 
-    axios.get("http://localhost:5000/api/cars/" + id).then(function (response) {
+    axios.get("/cars/" + id).then(function (response) {
         setCar_Id(response.data['']);
         setCategory(response.data['category']);
         setModel(response.data['model']);

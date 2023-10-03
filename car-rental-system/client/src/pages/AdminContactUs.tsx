@@ -15,7 +15,7 @@ export default function AdminContactUs() {
 
   
   useEffect(() => {
-    axios.get("http://localhost:5000/api/contactus/")
+    axios.get("/contactus/")
 
     .then(res => {   
         setContactUs(res.data);

@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import Modal from 'react-bootstrap/Modal';
 import Button from 'react-bootstrap/Button';
-import axios from 'axios';
+import axios from '../../lib/axios';;
 import swal from 'sweetalert'
 
 export default function DeleteCar(props: { car_Id: string; }) {
@@ -39,7 +39,7 @@ export default function DeleteCar(props: { car_Id: string; }) {
     const DeleteShow = () => {
         console.log(props.car_Id)
 
-        axios.get("http://localhost:5000/api/cars/" + props.car_Id).then(function (response) {
+        axios.get("/cars/" + props.car_Id).then(function (response) {
             setCar_Id('');
             setCategory('');
             setModel('');
@@ -66,7 +66,7 @@ export default function DeleteCar(props: { car_Id: string; }) {
 
     function submitForm(e: { preventDefault: () => void; }) {
         e.preventDefault();
-        axios.delete(`http://localhost:5000/api/cars/delete/${props.car_Id}`, config).then(function (response) {
+        axios.delete(`/cars/delete/${props.car_Id}`, config).then(function (response) {
             setShow(false);
             swal({
                 text: "Car Successfully Deleted", icon: "success", buttons: {

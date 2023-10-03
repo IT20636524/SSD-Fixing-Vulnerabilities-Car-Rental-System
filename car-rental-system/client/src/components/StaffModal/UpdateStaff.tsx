@@ -2,7 +2,7 @@ import React, { useEffect, useState , } from 'react'
 import { Col, Row, Form } from "react-bootstrap";
 import Modal from 'react-bootstrap/Modal';
 import Button from 'react-bootstrap/Button';
-import axios from 'axios';
+import axios from '../../lib/axios';;
 import swal from 'sweetalert';
 import { useParams  } from "react-router-dom";
 import { useNavigate } from 'react-router-dom';
@@ -59,7 +59,7 @@ export default function UpdateStaff(props: { driver_code: string; }) {
         data.append("file", file);
         staffData.image=  filename;
         try {
-            axios.put("http://localhost:5000/api/update", data);
+            axios.put("/update", data);
         } catch (err) {
           alert(err)
         }
@@ -71,7 +71,7 @@ export default function UpdateStaff(props: { driver_code: string; }) {
     const updateShow = () => {
         console.log( props.driver_code)
        
-        axios.get("http://localhost:5000/api/staff/" + props.driver_code)
+        axios.get("/staff/" + props.driver_code)
         .then(function (response) {
               setDriverCode(response.data['driver_code']);
               setName(response.data['driver_name']);
@@ -98,7 +98,7 @@ export default function UpdateStaff(props: { driver_code: string; }) {
 
     function submitForm(e: { preventDefault: () => void; }){
         e.preventDefault();
-        axios.put(`http://localhost:5000/api/staff/update/${props.driver_code}`,staffData)
+        axios.put(`/staff/update/${props.driver_code}`,staffData)
             .then(function (response) {
                 console.log(response);
                 setDriverCode('');
