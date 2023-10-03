@@ -103,15 +103,17 @@ app.use((req, res, next) => {
   res.setHeader("X-Frame-Options", "DENY");
   next();
 });
-// Add Strict-Transport-Security header
-// app.use(
-//   helmet.strictTransportSecurity({
-//     maxAge: 31536000, // 1 year in seconds
-//     includeSubDomains: true, // Optional, include subdomains
-//     preload: true, // Optional, indicate that the site is in the HSTS preload list
-//   })
-// );
 
+//Add Strict-Transport-Security header
+/*
+app.use(
+  helmet.strictTransportSecurity({
+    maxAge: 31536000, // 1 year in seconds
+    includeSubDomains: true, // Optional, include subdomains
+    preload: true, // Optional, indicate that the site is in the HSTS preload list
+  })
+);
+*/
 
 // Add X-Content-Type-Options header
 app.use(helmet.noSniff());
