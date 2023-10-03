@@ -27,9 +27,12 @@ const decodeJwtToken = (token) => {
 //Register
 router.post("/register", async (req, res) => {
   const salt = await bcrypt.genSalt(10);
-  const hashedPass = await bcrypt.hash(req.body.password, salt);
   //vulnerability-if password is empty hash value will generate
   //vulnerability-if password is undefined results in internal server error
+  if (req.body.password === undefined || req.body.password === "") {
+    return res.status(400).json({ message: "Password is required!" });
+  }
+  const hashedPass = await bcrypt.hash(req.body.password, salt);
   const newUser = new User({
     name: req.body.name,
     email: req.body.email,
@@ -43,7 +46,9 @@ router.post("/register", async (req, res) => {
       const user = await newUser.save();
       res.status(200).json(user);
     } catch (err) {
-      res.status(500).json(err);
+      if (err.code === 11000) {
+        res.status(409).json({ message: "Email already exists!" });
+      }
     }
   } catch (err) {
     console.log(err);
@@ -74,7 +79,7 @@ router.post("/validate", async (req, res) => {
         newUser.user_id = "U00" + (Number(lastUserDocument[0].user_id.slice(3)) + 1);
         try {
           const savedUser = await newUser.save();
-          const {password, ...others} = savedUser
+          const { password, ...others } = savedUser
           sendTokenResponse(res, others, 'successful')
         } catch (err) {
           res.status(err.code).json("Unable to create an account");
@@ -90,13 +95,13 @@ router.post("/validate", async (req, res) => {
 
 
 //Login
-router.post("/login", async(req,res) => {
-    // console.log(req);
-    try{
-        //fixing NoSQL injection
-        // const user = await User.findOne({ email : req.body.email})
-        let query = { email: req.body.email.toString() };
-        const user = await User.findOne(query)
+router.post("/login", async (req, res) => {
+  // console.log(req);
+  try {
+    //fixing NoSQL injection
+    // const user = await User.findOne({ email : req.body.email})
+    let query = { email: req.body.email.toString() };
+    const user = await User.findOne(query)
 
     console.log(req.body.password);
     if (!user) {

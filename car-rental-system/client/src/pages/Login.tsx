@@ -1,7 +1,8 @@
 import axios from "axios";
-import {useRef} from "react";
+import { useRef } from "react";
 import "../pages/styles.css";
 import handleThirdPartyAuthentication from "../utils/handleThirdPartyAuthentication";
+import SSO from "../components/SSO/SSO";
 // import jwt_decode from "jwt-decode";
 
 export default function Login() {
@@ -9,19 +10,19 @@ export default function Login() {
     const handleSubmit = async (e: any) => {
         e.preventDefault();
         try {
-          const res = await axios.post("/UserAuth/login", { 
-            email: emailRef.current?.value,
-            password: passwordRef.current?.value,
-           });
-          localStorage.setItem('user', JSON.stringify(res.data.data.user))
-          localStorage.setItem('access_token', res.data.data.access_token)
-          window.location.href = "/";
+            const res = await axios.post("/UserAuth/login", {
+                email: emailRef.current?.value,
+                password: passwordRef.current?.value,
+            });
+            localStorage.setItem('user', JSON.stringify(res.data.data.user))
+            localStorage.setItem('access_token', res.data.data.access_token)
+            window.location.href = "/";
         } catch (err) {
             console.log(err);
         }
     };
 
-    
+
 
     const emailRef = useRef<HTMLInputElement>(null);
     const passwordRef = useRef<HTMLInputElement>(null);
@@ -91,24 +92,52 @@ export default function Login() {
                                         <br />
 
                                         {/* <!-- Submit button --> */}
-                                        <button type="submit" className="btn btn-primary btn-block mb-4">
+                                        <button type="submit" style={{ background: "#ad1fff" }} className="btn btn-primary btn-block mb-4">
                                             Sign In
                                         </button>
-                                        <button type="button" className="btn btn-primary btn-block mb-4" onClick={() => handleThirdPartyAuthentication()}>
-                                            Google Sign In
-                                        </button>
-                                        <button type="button" className="btn btn-primary btn-block mb-4" onClick={() => handleThirdPartyAuthentication("facebook")}>
-                                            Facebook Sign In
-                                        </button>
+                                        <div>
+                                            <p className="text-center mb-4 opacity-50" style={{ color: "#ad1fff" }}>
+                                                Or sign in with
+                                            </p>
+                                            <div style={{
+                                                display: "flex",
+                                                alignItems: "center",
+                                                gap: "16px",
+                                                justifyContent: "center",
+                                            }}>
+                                                <button type="button" style={{
+                                                    backgroundImage: "url(/social-icons/google.png)",
+                                                    backgroundSize: "contain",
+                                                    backgroundPosition: "center",
+                                                    width: "32px",
+                                                    height: "32px",
+                                                    borderRadius: "50%",
+                                                    border: 'none'
+                                                }} onClick={() => handleThirdPartyAuthentication()} />
+                                                {/* <img src="/social-icons/google.png" alt="google" width="30px" height="auto" />
+                                            </button> */}
+                                                <button type="button" style={{
+                                                    backgroundImage: "url(/social-icons/facebook.png)",
+                                                    backgroundSize: "cover",
+                                                    backgroundPosition: "center",
+                                                    width: "35px",
+                                                    height: "35px",
+                                                    borderRadius: "50%",
+                                                    border: 'none'
+                                                }} onClick={() => handleThirdPartyAuthentication("facebook")} />
+                                            </div>
+                                        </div>
+                                        <SSO />
                                         <br />
                                         <br />
 
                                         {/* <!-- Register buttons --> */}
                                         <div className="text-center">
-                                            <p>or sign up with:</p>
-                                            <a className="login-link" href="/sign-up">
-                                                Sign Up
-                                            </a>
+                                            <p>Don't have an account?&nbsp;
+                                                <a className="login-link" style={{ color: "#ad1fff" }} href="/sign-up">
+                                                    Sign Up
+                                                </a>
+                                            </p>
                                         </div>
 
 

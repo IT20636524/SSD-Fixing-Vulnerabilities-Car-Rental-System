@@ -10,6 +10,7 @@ import * as Yup from 'yup';
 import axios from '../lib/axios';;
 import swal from 'sweetalert';
 import handleThirdPartyAuthentication from '../utils/handleThirdPartyAuthentication';
+import SSO from '../components/SSO/SSO';
 
 export const Signup = () => {
     const validate = Yup.object({
@@ -76,12 +77,7 @@ export const Signup = () => {
                             <button type="submit" className="btn btn-primary btn-lg reg-btn1" disabled={checkboxStatus.filter(status => status === true).length != 1}>Register</button>
                             <button className="btn btn-danger btn-lg reg-btn2" type="reset">Reset</button>
                         </div>
-                        <button type="button" className="btn btn-primary btn-block mb-4" onClick={() => handleThirdPartyAuthentication()}>
-                            Google Sign In
-                        </button>
-                        <button type="button" className="btn btn-primary btn-block mb-4" onClick={() => handleThirdPartyAuthentication("facebook")}>
-                            Facebook Sign In
-                        </button>
+                        <SSO />
                         <div className="d-flex justify-content-center mx-4 mb-3 mb-lg-4">
                             <label className='reg-label'>Already have an account..?</label>
                         </div>
