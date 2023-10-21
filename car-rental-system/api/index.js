@@ -33,10 +33,9 @@ app.use(express.json());
 
 // Add middleware to set X-XSS-Protection header
 app.use((req, res, next) => {
-    res.header("X-XSS-Protection", "1; mode=block");
-    next();
+  res.header("X-XSS-Protection", "1; mode=block");
+  next();
 });
-
 
 mongoose
   .connect(process.env.MONGO_URL, {
@@ -104,15 +103,17 @@ app.use((req, res, next) => {
   res.setHeader("X-Frame-Options", "DENY");
   next();
 });
-// Add Strict-Transport-Security header
-// app.use(
-//   helmet.strictTransportSecurity({
-//     maxAge: 31536000, // 1 year in seconds
-//     includeSubDomains: true, // Optional, include subdomains
-//     preload: true, // Optional, indicate that the site is in the HSTS preload list
-//   })
-// );
 
+//Add HTTP Strict-Transport-Security header
+/*
+app.use(
+  helmet.strictTransportSecurity({
+    maxAge: 31536000, // 1 year in seconds
+    includeSubDomains: true, // Optional, include subdomains
+    preload: true, // Optional, indicate that the site is in the HSTS preload list
+  })
+);
+*/
 
 // Add X-Content-Type-Options header
 app.use(helmet.noSniff());
