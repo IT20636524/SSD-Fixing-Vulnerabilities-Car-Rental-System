@@ -3,3 +3,4 @@ car-rental-system/api/node_modules/bcrypt/lib/binding/napi-v3/bcrypt_lib.node
 car-rental-system/node_modules
 car-rental-system/client/.env
 car-rental-system/client/src/auth/firebase.ts
+.DS_Store
