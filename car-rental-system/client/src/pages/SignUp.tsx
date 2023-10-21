@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState,useEffect } from 'react';
 import {
     Formik,
 
@@ -13,6 +13,18 @@ import handleThirdPartyAuthentication from '../utils/handleThirdPartyAuthenticat
 import SSO from '../components/SSO/SSO';
 
 export const Signup = () => {
+    const [csrfToken, setCsrfToken] = useState("");
+
+    useEffect(() => {
+        // Fetch CSRF token from the server
+        axios.get('http://localhost:5000/form')
+            .then(response => {
+                setCsrfToken(response.data.csrfToken);
+            })
+            .catch(error => {
+                console.error('Error fetching CSRF token:', error);
+            });
+    }, []);
     const validate = Yup.object({
         name: Yup.string()
             .max(15, 'Must be 15 characters or less')
@@ -45,13 +57,27 @@ export const Signup = () => {
                 confirmPassword: ''
             }}
             validationSchema={validate}
-            onSubmit={(values: any) => {
-                console.log(values)
-                axios.post('/UserAuth/register', values).then(function (response) {
-                    console.log(response);
-                    swal({ text: "Successfully Added", icon: "success" })
+        
+            onSubmit={(values) => {
+                console.log(values);
+                axios.post('/UserAuth/register', values, {
+                    headers: {
+                        'CSRF-Token': csrfToken // Include the CSRF token in the request headers
+                    }
                 })
+<<<<<<< Updated upstream
 
+=======
+                .then(function (response) {
+                    console.log(response);
+                    swal({ text: "Successfully Added", icon: "success" });
+                })
+                .catch(function (error) {
+                    console.log(error);
+                    swal({ text: "An error occurred", icon: "error" });
+                });
+                
+>>>>>>> Stashed changes
 
             }}
         >
