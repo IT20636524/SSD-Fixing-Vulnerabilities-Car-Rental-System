@@ -104,7 +104,7 @@ app.use((req, res, next) => {
   next();
 });
 
-//Add Strict-Transport-Security header
+//Add HTTP Strict-Transport-Security header
 /*
 app.use(
   helmet.strictTransportSecurity({
