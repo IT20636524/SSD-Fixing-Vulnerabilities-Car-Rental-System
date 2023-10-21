@@ -21,8 +21,11 @@ const protect = async (req, res, next) => {
   req.user = user;
   next();
 };
+//attackers can make authenticated users perform unintended actions without their knowledge.
 
 // CSRF Protection Middleware
+//middleware csrfProtection has been added to provide CSRF protection using cookies.
+
 const csrfProtection = csrf({ cookie: true });
 
 module.exports = {
